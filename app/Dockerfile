@@ -11,7 +11,7 @@ RUN apk update \
 COPY Pipfile* /tmp/
 RUN cd /tmp/ && pip install pipenv && pipenv install --system
 # create directory for the app user
-RUN mkdir -p /usr/src
+RUN mkdir -p /home/app
 # create the app user
 RUN addgroup -S app && adduser -S app -G app
 # Set working dir
