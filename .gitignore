@@ -79,4 +79,7 @@ notebooks/
 
 Pycharm
 .idea/
-urbvan/db.sqlite3
+app/urbvan/db.sqlite3
+# Venv Variables
+.env.prod
+.env.prod.db
