@@ -5,6 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from .mixins import (CreateModelMixin, ListModelMixin)
 from .schemas import PaginationResponse
 from .authentication import CustomTokenAuthentication
+from .permissions import (
+    IsAdminUser,
+    IsAnonymousUser,
+    IsSuperUser,
+)
 
 
 class CreateAPIView(CreateModelMixin, GenericAPIView):
@@ -12,7 +17,7 @@ class CreateAPIView(CreateModelMixin, GenericAPIView):
     Concrete view for creating a model instance.
     """
     authentication_classes = (CustomTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminUser,)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
@@ -24,7 +29,7 @@ class ListAPIView(ListModelMixin, GenericAPIView):
     """
 
     authentication_classes = (CustomTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAnonymousUser)
 
     pagination_class = PaginationResponse
 
@@ -33,4 +38,7 @@ class ListAPIView(ListModelMixin, GenericAPIView):
 
 
 class ListCreateView(CreateAPIView, ListAPIView):
-    pass
+    """ Concrete view for listing a queryset or creating a model instance """
+    authentication_classes = (CustomTokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsSuperUser,)
+
