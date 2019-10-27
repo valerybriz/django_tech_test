@@ -3,7 +3,7 @@ from django.db import models
 
 from .locations import LocationModel
 
-from apps.utils import create_id
+from ...utils import create_id
 
 
 class StationModel(models.Model):

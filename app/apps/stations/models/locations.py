@@ -1,7 +1,7 @@
 # coding: utf8
 from django.db import models
 
-from apps.utils import create_id
+from ...utils import create_id
 
 
 class LocationModel(models.Model):
