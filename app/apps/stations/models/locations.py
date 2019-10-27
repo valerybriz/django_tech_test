@@ -18,8 +18,8 @@ class LocationModel(models.Model):
     id = models.CharField(default=create_id('loc_'), primary_key=True,
                           max_length=30, unique=True)
     name = models.CharField(max_length=100)
-    latitude = models.DecimalField(max_digits=19, decimal_places=16)
-    longitude = models.DecimalField(max_digits=19, decimal_places=16)
+    coordinates = models.CharField(max_length=100, default="")
+    # geometry = models.GeometryField() TODO install postgis to add this field
 
     def __str__(self):
         return self.name
