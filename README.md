@@ -21,3 +21,30 @@ La prueba tiene un tiempo para desarrollarse de 3 días, si tienes alguna duda p
 
 
 Recuerda, en **URBVAN** queremos a los mejores y sabemos que tú puedes ser uno de ellos.
+
+# Running the app
+To run the app execute the following commands:
+```  
+$ docker-compose up --build -d
+$ docker-compose run web python manage.py makemigrations
+$ docker-compose run web python manage.py migrate 
+$ docker-compose run web python manage.py collectstatic --no-input --clear 
+
+```
+
+###For logs:  
+Nginx  
+docker-compose logs nginx  
+Web  
+docker-compose logs web  
+DB  
+docker-compose logs db  
+
+###For shell accessing: 
+Nginx  
+docker exec -ti nginx bash  
+Web  
+docker exec -ti web bash  
+Database  
+docker exec -ti db bash  
+
