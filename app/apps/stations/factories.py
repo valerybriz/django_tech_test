@@ -4,7 +4,7 @@ from .models import LocationModel, StationModel
 
 
 class LocationFactory(factory.django.DjangoModelFactory):
-
+    """ Mocked up factory for Location Model """
     class Meta:
         model = LocationModel
 
@@ -13,7 +13,7 @@ class LocationFactory(factory.django.DjangoModelFactory):
 
 
 class StationFactory(factory.django.DjangoModelFactory):
-
+    """ Mocked up factory for Station Model """
     class Meta:
         model = StationModel
 

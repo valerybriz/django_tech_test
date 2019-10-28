@@ -13,7 +13,7 @@ from .factories import LocationFactory, StationFactory
 
 
 class LocationCreateTest(APITestCase):
-
+    """ Test class for Location model """
     url = reverse("locations:v1_list_create_location")
 
     def setUp(self):
@@ -25,6 +25,7 @@ class LocationCreateTest(APITestCase):
         )
 
     def test_list(self):
+        """ Creates a location factory and tests the api location list """
         LocationFactory()
 
         response = self.client.get(self.url)
@@ -33,9 +34,10 @@ class LocationCreateTest(APITestCase):
         self.assertEquals(response['body'].get('count'), 1)
 
     def test_create_successfully(self):
+        """ Test Creates a new location """
         data = {
             "name": "Urbvan",
-            "coordinates": "19.388401,-99.227358"
+            "coordinates": "19.588401,-99.297358"
         }
 
         response = self.client.post(self.url, data, format='json')
@@ -43,7 +45,7 @@ class LocationCreateTest(APITestCase):
 
 
 class StationCreateTest(APITestCase):
-
+    """ Test class for Station model """
     url_detail = reverse("stations:stations-detail", kwargs={'pk': 'pk'})
     url_delete = reverse("stations:stations-delete", kwargs={'pk': 'pk'})
     url_list = reverse("stations:stations-list")
@@ -57,15 +59,15 @@ class StationCreateTest(APITestCase):
         )
 
     def test_list(self):
+        """ Creates a station factory and tests the api station list """
         StationFactory()
-
         response = self.client.get(self.url_list)
         response = response.json()
 
         self.assertEquals(len(response), 1)
 
     def test_create_successfully(self):
-        # StationFactory()
+        """ Tests creation of a station (mocks up a location) """
         location = LocationFactory()
         data = {
             "order": 1,
@@ -77,9 +79,9 @@ class StationCreateTest(APITestCase):
         self.assertEquals(response.status_code, 201)
 
     def test_detail_successfully(self):
+        """ Tests the retrieve detail of a Station """
         self.user = UserAdminFactory()
         self.user_token = TokenFactory(user=self.user)
-
         self.client.credentials(
             AUTHORIZATION=f"Urbvan {self.user_token.key}"
         )
@@ -92,7 +94,7 @@ class StationCreateTest(APITestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_delete_successfully(self):
-
+        """ Tests a delete station """
         self.user = UserSuperUserFactory()
         self.user_token = TokenFactory(user=self.user)
         self.client.credentials(
@@ -103,17 +105,14 @@ class StationCreateTest(APITestCase):
             'pk': station.id
         }
 
-        # Get with success the element
         url = str(self.url_detail).replace('pk', data['pk'])
         response = self.client.get(url, data, format='json')
         self.assertEquals(response.status_code, 200)
 
-        # Delete element and check
         url = str(self.url_delete).replace('pk', data['pk'])
         response = self.client.delete(url, data, format='json')
         self.assertEquals(response.status_code, 204)
 
-        # Not found element
         url = str(self.url_detail).replace('pk', data['pk'])
         response = self.client.get(url, data, format='json')
         self.assertEquals(response.status_code, 404)
