@@ -83,3 +83,5 @@ app/urbvan/db.sqlite3
 # Venv Variables
 .env.prod
 .env.prod.db
+app/urbvan/settings/staticfiles
+app/urbvan/staticfiles
