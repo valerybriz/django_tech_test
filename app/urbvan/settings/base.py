@@ -93,8 +93,21 @@ DATABASES = {
         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
+    },
+    'read_replica': {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get(
+            "SQL_DATABASE_READ",
+            os.path.join(BASE_DIR, "db.sqlite3")
+        ),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
+
+DATABASE_ROUTERS = ['apps.db_router.PrimaryReplicaRouter']
 
 
 # Password validation
